@@ -88,7 +88,7 @@ data_problem_33 = [[1, 12], [2, 15], [3, 16]]
 data_wind_tunnel = [[0, 0], [2, 2.90], [4, 14.8], [6, 39.6], [8, 74.3], [10, 119]]
 
 
-cur_data = data_one
+cur_data = data_two
 polynomial_coefficients_one = fit(cur_data, polynomial_values)
 exponential_coefficients_one = fit(cur_data, exponential_values)
 # f, (ax1, ax2) = plt.subplots(2, 1)
