@@ -16,7 +16,7 @@ def data_points_to_matrices(data_list):
     return [A, b]
 
 
-data = [[1, 2], [2, 2], [3, 3]]
+data = [[5, 2], [2, 6], [3, 3]]
 matrices = data_points_to_matrices(data)
 A = matrices[0]
 b = matrices[1]
