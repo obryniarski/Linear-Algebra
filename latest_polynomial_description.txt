@@ -1,3 +1,0 @@
-Polynomial Coefficients: [0.0, 1.71, -1.19, 0.66, -0.07, 0.0]
-Polynomial Degree: 5
-Fitted Points: [0, 0], [2, 2.9], [4, 14.8], [6, 39.6], [8, 74.3], [10, 119]

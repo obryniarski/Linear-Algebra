@@ -37,7 +37,7 @@ def graph_polynomial(data_list, polynomial):
     poly_as_str = '+'.join(['%s$x^%i$' % (str(round(polynomial[i], 2)), i) for i in range(len(polynomial))])
 
     # save polynomial stats
-    with open('latest_polynomial_description.txt', 'w') as file:
+    with open('visualizations/latest_polynomial_description.txt', 'w') as file:
         file.write('Polynomial Coefficients: ' + str([round(polynomial[i], 2) for i in range(len(polynomial))]) + '\n')
         file.write('Polynomial Degree: ' + str(len(polynomial) - 1) + '\n')
         file.write('Fitted Points: ' + str(data_list)[1:-1])
@@ -50,7 +50,7 @@ def graph_polynomial(data_list, polynomial):
     for point in data_list:
         plt.plot(point[0], point[1], marker='o')
 
-    plt.savefig('latest_polynomial_graph.png', dpi=72)
+    plt.savefig('visualizations/latest_polynomial_graph.png', dpi=72)
     plt.show()
 
 
@@ -67,7 +67,7 @@ data_problem_33 = [[1, 12], [2, 15], [3, 16]]
 data_wind_tunnel = [[0, 0], [2, 2.90], [4, 14.8], [6, 39.6], [8, 74.3], [10, 119]]
 
 
-cur_data = data_wind_tunnel
+cur_data = data_one
 polynomial_coefficients_one = fit_polynomial(cur_data)
 graph_polynomial(cur_data, polynomial_coefficients_one)
 
