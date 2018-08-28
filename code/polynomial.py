@@ -83,12 +83,12 @@ data_one = [[1, 1], [1.4, 1.45], [1.6, 1.6], [2, 1.8], [3, 4], [4, 4], [5, 5],
             [6, 6], [7, 7], [8, 8.12], [8.5, 10], [9, 15]]
 data_two = [[5, 2], [2, 6], [3, 3], [5.6, 10], [10, 15], [-5, 2], [np.pi, np.pi], [-2, 9], [-4, 6], [-4.4, 7],
             [0, 9]]
-data_three = [[2, 4], [2.5, 6], [5, 10], [10, 16]]
+data_three = [[2, 4], [2.5, 6], [5, 10], [7, 14], [10, 16], [12, 14], [13, 12], [14, 16], [14.5, 27]]
 data_problem_33 = [[1, 12], [2, 15], [3, 16]]
 data_wind_tunnel = [[0, 0], [2, 2.90], [4, 14.8], [6, 39.6], [8, 74.3], [10, 119]]
 
 
-cur_data = data_one
+cur_data = data_three
 polynomial_coefficients_one = fit(cur_data, polynomial_values)
 exponential_coefficients_one = fit(cur_data, exponential_values)
 # f, (ax1, ax2) = plt.subplots(2, 1)
