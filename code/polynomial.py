@@ -3,29 +3,34 @@ import matplotlib.pyplot as plt
 
 
 def polynomial_values(n, degree=1):
-    return [n ** i for i in range(degree + 1)]
+    return [n ** i for i in range(degree)]
 
 
-def data_points_to_matrices(data_list):
-    degree = len(data_list) - 1
+def exponential_values(n, num_data_points):
+    return [np.e ** (i * n) for i in range(num_data_points)]
+
+
+def data_points_to_matrices(data_list, term_values):
+    # term_values returns a row of each coefficient
+
+    len_data = len(data_list)
     A = []
     b = []
     for data_point in data_list:
-        A.append(polynomial_values(data_point[0], degree))
+        A.append(term_values(data_point[0], len_data))
         b.append(data_point[1])
-
     return [A, b]
 
 
-def fit_polynomial(data_list):
+def fit(data_list, polynomial_creator):
     # assert len(data_list) == degree + 1, 'This is not a well-determined system, add or remove data points'
-    matrices = data_points_to_matrices(data_list)
+    matrices = data_points_to_matrices(data_list, polynomial_creator)
     A = matrices[0]
     b = matrices[1]
     return np.linalg.solve(A, b)
 
 
-def graph_polynomial(data_list, polynomial):
+def graph_polynomial(data_list, polynomial, sub=plt):
     # create graph from polynomial
     x_min = min(point[0] for point in data_list)
     x_max = max(point[0] for point in data_list)
@@ -43,19 +48,35 @@ def graph_polynomial(data_list, polynomial):
         file.write('Fitted Points: ' + str(data_list)[1:-1])
 
     # plot
-    plt.plot(x, poly_x, label='Polynomial: ' + poly_as_str if len(polynomial) < 5  else 'Polynomial: too long to display')
+    sub.plot(x, poly_x, label='Polynomial: ' + poly_as_str if len(polynomial) < 5  else 'Polynomial: too long to display')
     plt.ylim(y_min - 1, y_max + 1)
     plt.title('Degree %i Polynomial, fitting %i data points' % (len(polynomial) - 1, len(data_list)))
-    plt.legend()
+    sub.legend()
     for point in data_list:
-        plt.plot(point[0], point[1], marker='o')
-
+        sub.plot(point[0], point[1], marker='o')
     plt.savefig('visualizations/latest_polynomial_graph.png', dpi=72)
-    plt.show()
 
 
-def predict(n, polynomial):
+def graph_exponential(data_list, exponential, sub=plt):
+    # This one ended up not being very fittable, I'll probably try sin/cos next
+    x_min = min(point[0] for point in data_list)
+    x_max = max(point[0] for point in data_list)
+    y_min = min(point[1] for point in data_list)
+    y_max = max(point[1] for point in data_list)
+    x = np.linspace(x_min, x_max, 256)
+    expon_x = [sum(exponential[j] * np.e ** (j * i) for j in range(len(exponential))) for i in x]
+    sub.plot(x, expon_x)
+    for point in data_list:
+        sub.plot(point[0], point[1], marker='o')
+    plt.ylim(y_min, y_max)
+
+
+def predict_poly(n, polynomial):
     return sum(polynomial[i] * (n ** i) for i in range(len(polynomial)))
+
+
+def predict_exp(n, exponential):
+    return sum(exponential[i] * np.e ** (n * i) for i in range(len(exponential)))
 
 
 data_one = [[1, 1], [1.4, 1.45], [1.6, 1.6], [2, 1.8], [3, 3.6], [4, 4], [5, 5],
@@ -67,8 +88,12 @@ data_problem_33 = [[1, 12], [2, 15], [3, 16]]
 data_wind_tunnel = [[0, 0], [2, 2.90], [4, 14.8], [6, 39.6], [8, 74.3], [10, 119]]
 
 
-cur_data = data_one
-polynomial_coefficients_one = fit_polynomial(cur_data)
+cur_data = data_wind_tunnel
+polynomial_coefficients_one = fit(cur_data, polynomial_values)
+exponential_coefficients_one = fit(cur_data, exponential_values)
+# f, (ax1, ax2) = plt.subplots(2, 1)
 graph_polynomial(cur_data, polynomial_coefficients_one)
+# graph_exponential(cur_data, exponential_coefficients_one)
+plt.show()
 
-print(predict(7.5, polynomial_coefficients_one))
+print(predict_poly(7.5, polynomial_coefficients_one))
